@@ -203,7 +203,7 @@ export default function MainLayout(props) {
               <StarIcon />
             </IconButton>
           </Link>
-          <Link to="/auth">
+          <Link to="/login">
             <IconButton>
               <AccountCircleIcon style={{ color: "white", display: "flex" }} />
             </IconButton>

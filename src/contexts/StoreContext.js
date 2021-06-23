@@ -10,6 +10,8 @@ const INIT_STATE = {
   total: 0,
   cart: {},
   favorites: {},
+  login: [],
+  registration: [],
 };
 
 const reducer = (state = INIT_STATE, action) => {
@@ -62,6 +64,14 @@ const reducer = (state = INIT_STATE, action) => {
         ...state,
         favorites: action.payload,
       };
+    case "SET_LOGIN":
+      return {
+        login: action.payload,
+      };
+    case "SET_REGISTRATION":
+      return {
+        registration: action.payload,
+      };
     default:
       return state;
   }
@@ -76,10 +86,11 @@ export default function StoreContextProvider(props) {
   const fetchProducts = async (page = 0) => {
     try {
       const response = await axios.get(
-        `${URL}/products?_start=${page * 4}&_end=${4 * (page + 1)}`
+        `${URL}/products/?_start=${page * 4}&_end=${4 * (page + 1)}`
       );
       const products = response.data;
       const total = response.headers["x-total-count"];
+      console.log(URL);
 
       dispatch({
         type: "SET_PRODUCTS",
@@ -94,7 +105,7 @@ export default function StoreContextProvider(props) {
   };
 
   const fetchSearchProducts = async (value) => {
-    const response = await axios.get(`${URL}/products/?q=${value}`);
+    const response = await axios.get(`${URL}/products/search/?q=${value}`);
     const products = response.data;
     const total = response.headers["x-total-count"];
 
@@ -108,7 +119,7 @@ export default function StoreContextProvider(props) {
   };
 
   const fetchProductDetail = async (id) => {
-    const response = await axios.get(`${URL}/products/${id}`);
+    const response = await axios.get(`${URL}/products/${id}/`);
     const productDetail = response.data;
     dispatch({
       type: "SET_PRODUCT_DETAIL",
@@ -117,7 +128,7 @@ export default function StoreContextProvider(props) {
   };
 
   const createProduct = async (product) => {
-    const response = await axios.post(`${URL}/products`, product);
+    const response = await axios.post(`${URL}/products/create/`, product);
     const createdProduct = response.data;
 
     dispatch({
@@ -129,15 +140,15 @@ export default function StoreContextProvider(props) {
   };
 
   const deleteProduct = async (id) => {
-    await axios.delete(`${URL}/products/${id}`);
+    await axios.delete(`${URL}/products/delete/${id}/`);
     dispatch({
       type: "REMOVE_PRODUCT",
       payload: id,
-    });   
+    });
   };
 
   const updateProduct = async (id, data) => {
-    await axios.patch(`${URL}/products/${id}`, data);
+    await axios.patch(`${URL}/products/update/${id}/`, data);
     dispatch({
       type: "CLEAR_PRODUCT",
     });
@@ -273,7 +284,26 @@ export default function StoreContextProvider(props) {
       favorites.products.push(newProducts);
     }
     localStorage.setItem("favorites", JSON.stringify(favorites));
-    // getFavorites();
+  };
+
+  const setLogin = async () => {
+    const response = await axios.post(`${URL}/accounts/login/`);
+    const loginUser = response.data;
+
+    dispatch({
+      type: "SET_LOGIN",
+      payload: loginUser,
+    });
+  };
+
+  const setRegistration = async () => {
+    const response = await axios.post(`${URL}/accounts/register/`);
+    const regUser = response.data;
+
+    dispatch({
+      type: "SET_REGISTRATION",
+      payload: regUser,
+    });
   };
 
   return (
@@ -286,6 +316,8 @@ export default function StoreContextProvider(props) {
         brandDetail: state.brandDetail,
         cart: state.cart,
         favorites: state.favorites,
+        login: state.login,
+        registration: state.registration,
         fetchProducts,
         fetchProductDetail,
         createProduct,
@@ -300,6 +332,8 @@ export default function StoreContextProvider(props) {
         changeProductCount,
         getFavorites,
         addProductToFavorites,
+        setLogin,
+        setRegistration,
       }}
     >
       {props.children}
