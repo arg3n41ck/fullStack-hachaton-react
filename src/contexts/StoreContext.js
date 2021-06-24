@@ -30,7 +30,7 @@ const reducer = (state = INIT_STATE, action) => {
         ...state,
         products: [...state.products, action.payload],
       };
-    case "REMOVE_PRODpUCT":
+    case "REMOVE_PRODUCT":
       return {
         ...state,
         products: state.products.filter(
