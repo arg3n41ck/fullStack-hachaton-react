@@ -27,12 +27,6 @@ import InstagramIcon from "@material-ui/icons/Instagram";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import StarIcon from "@material-ui/icons/Star";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-} from "reactstrap";
 
 const drawerWidth = 240;
 
@@ -139,9 +133,9 @@ export default function MainLayout(props) {
 
   const { brands, fetchBrands } = useContext(storeContext);
 
-  useEffect(() => {
-    fetchBrands();
-  }, []);
+  // useEffect(() => {
+  //   fetchBrands();
+  // }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -203,7 +197,7 @@ export default function MainLayout(props) {
               <StarIcon />
             </IconButton>
           </Link>
-          <Link to="/auth">
+          <Link to="/login">
             <IconButton>
               <AccountCircleIcon style={{ color: "white", display: "flex" }} />
             </IconButton>

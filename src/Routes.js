@@ -16,6 +16,8 @@ import Sports from "./Views/Sports/Sports";
 import reactionGame from "./Views/reactionGame/state/Game";
 import TicTacToe from "./Views/TicTacToe/components/Game";
 import SnakeGame from "./Views/SimpleSnake/SnakeGame";
+import Login from "./Views/Auth/Login";
+import SignUp from "./Views/Auth/Registration";
 
 export default function Routes() {
   return (
@@ -45,6 +47,8 @@ export default function Routes() {
         <Route path="/tictactoe" component={TicTacToe} exact />
         <Route path="/reactionGame" component={reactionGame} exact />
         <Route path="/snakeGame" component={SnakeGame} exact />
+        <Route path="/login" component={Login} exact />
+        <Route path="/registration" component={SignUp} exact />
       </Switch>
     </Router>
   );
