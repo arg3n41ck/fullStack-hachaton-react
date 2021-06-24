@@ -14,6 +14,7 @@ import Football from "../../assets/images/football.jpg";
 import Basketball from "../../assets/images/basketball.jpg";
 import Forum1 from "../../assets/images/forum1.png";
 import Forum from "../../assets/images/forum.jpg";
+import Comments from "../../components/Comments";
 
 export default function MainPage() {
   const { products, fetchProducts, total } = useContext(storeContext);
@@ -44,6 +45,8 @@ export default function MainPage() {
         page={page}
         count={Math.ceil(total / 4)}
       />
+
+      <Comments />
     </MainLayout>
   );
 }

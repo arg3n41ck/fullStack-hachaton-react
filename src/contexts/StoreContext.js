@@ -30,7 +30,7 @@ const reducer = (state = INIT_STATE, action) => {
         ...state,
         products: [...state.products, action.payload],
       };
-    case "REMOVE_PRODpUCT":
+    case "REMOVE_PRODUCT":
       return {
         ...state,
         products: state.products.filter(
@@ -117,7 +117,7 @@ export default function StoreContextProvider(props) {
   };
 
   const createProduct = async (product) => {
-    const response = await axios.post(`${URL}/products`, product);
+    const response = await axios.post(`${URL}/products/create/`, product);
     const createdProduct = response.data;
 
     dispatch({
