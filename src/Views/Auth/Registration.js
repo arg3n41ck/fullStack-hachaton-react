@@ -1,7 +1,6 @@
 import React from "react";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { storeContext } from "../../contexts/StoreContext";
 import classes from "./login.module.css";
 import * as Yup from "yup";
 import MainLayout from "../../Layouts/MainLayout";
@@ -9,9 +8,10 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { notifySuccess } from "../../helpers/notifiers";
 import { Button, TextField } from "@material-ui/core";
 import TextError from "../../components/TextError";
+import { authContext } from "../../contexts/AuthContext";
 
 export default function SignUp() {
-  const { registration, setRegistration } = useContext(storeContext);
+  const { registration, setRegistration } = useContext(authContext);
 
   const history = useHistory();
 
@@ -36,7 +36,7 @@ export default function SignUp() {
     console.log(values);
     actions.resetForm();
     notifySuccess("Вы успешно зарегестрировались!");
-    history.push(`/`);
+    // history.push(`/`);
   };
 
   return (

@@ -9,11 +9,18 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { notifySuccess } from "../../helpers/notifiers";
 import { Button, TextField } from "@material-ui/core";
 import TextError from "../../components/TextError";
+import { useState } from "react";
+import { authContext } from "../../contexts/AuthContext";
 
 export default function Login() {
-  const { login, setLogin } = useContext(storeContext);
+  const { login, setLogin } = useContext(authContext);
 
+  const [token, setToken] = useState();
   const history = useHistory();
+
+  // if (!token) {
+  //   return <Login setToken={setToken} />;
+  // }
 
   const initialValues = {
     email: "",
@@ -32,7 +39,7 @@ export default function Login() {
     console.log(values);
     actions.resetForm();
     notifySuccess("Вы успешно вошли в аккаунт!");
-    history.push(`/`);
+    // history.push(`/`);
   };
 
   return (

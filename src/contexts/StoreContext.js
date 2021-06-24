@@ -10,8 +10,6 @@ const INIT_STATE = {
   total: 0,
   cart: {},
   favorites: {},
-  login: [],
-  registration: [],
 };
 
 const reducer = (state = INIT_STATE, action) => {
@@ -63,14 +61,6 @@ const reducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         favorites: action.payload,
-      };
-    case "SET_LOGIN":
-      return {
-        login: action.payload,
-      };
-    case "SET_REGISTRATION":
-      return {
-        registration: action.payload,
       };
     default:
       return state;
@@ -286,26 +276,6 @@ export default function StoreContextProvider(props) {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   };
 
-  const setLogin = async () => {
-    const response = await axios.post(`${URL}/accounts/login/`);
-    const loginUser = response.data;
-
-    dispatch({
-      type: "SET_LOGIN",
-      payload: loginUser,
-    });
-  };
-
-  const setRegistration = async () => {
-    const response = await axios.post(`${URL}/accounts/register/`);
-    const regUser = response.data;
-
-    dispatch({
-      type: "SET_REGISTRATION",
-      payload: regUser,
-    });
-  };
-
   return (
     <storeContext.Provider
       value={{
@@ -316,8 +286,6 @@ export default function StoreContextProvider(props) {
         brandDetail: state.brandDetail,
         cart: state.cart,
         favorites: state.favorites,
-        login: state.login,
-        registration: state.registration,
         fetchProducts,
         fetchProductDetail,
         createProduct,
@@ -332,8 +300,6 @@ export default function StoreContextProvider(props) {
         changeProductCount,
         getFavorites,
         addProductToFavorites,
-        setLogin,
-        setRegistration,
       }}
     >
       {props.children}

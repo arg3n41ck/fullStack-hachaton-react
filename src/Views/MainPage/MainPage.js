@@ -39,7 +39,6 @@ export default function MainPage() {
       <HeroSlider slider={heroSlider} />
       <ProductsList products={products} />
       <ProductsPagination
-        // shape={rounded}
         setPage={setPage}
         page={page}
         count={Math.ceil(total / 4)}
