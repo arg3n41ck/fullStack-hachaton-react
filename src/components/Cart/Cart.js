@@ -53,7 +53,7 @@ export default function Cart() {
                       <img
                         className={classes.cartImages}
                         style={{ width: "200px" }}
-                        src={elem.item.images[0]}
+                        src={elem.item.images}
                         alt=""
                       />{" "}
                     </TableCell>

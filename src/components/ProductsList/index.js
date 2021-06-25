@@ -2,6 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ProductItem from "../ProductItem";
+import { useContext } from "react";
+import { storeContext } from "../../contexts/StoreContext";
+import { useEffect } from "react";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -10,12 +13,17 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function ProductsList({ products }) {
+  const { fetchProducts } = useContext(storeContext);
   const classes = useStyles();
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        {products.map((product) => (
+        {products.results.map((product) => (
           <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
             <ProductItem data={product} />
           </Grid>

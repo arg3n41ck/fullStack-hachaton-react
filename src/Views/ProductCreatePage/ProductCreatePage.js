@@ -18,7 +18,6 @@ export default function ProductCreatePage() {
     title: "",
     price: "",
     description: "",
-    images: "",
   };
 
   const validationSchema = Yup.object({
@@ -27,17 +26,17 @@ export default function ProductCreatePage() {
       .typeError("Введите число!")
       .required("Обязательное поле!"),
     description: Yup.string().required("Обязательное поле!"),
-    images: Yup.string().required("Обязательное поле!"),
+    // images: Yup.string().required("Обязательное поле!"),
   });
 
   const onSubmit = (values, actions) => {
     createProduct({
       ...values,
-      images: [values.images],
+      // images: [values.images],
     }).then((id) => {
-      actions.resetForm();
+      // actions.resetForm();
       notifySuccess("Продукт был создан!");
-      history.push(`/products/${id}`);
+      // history.push(`/products/${id}`);
     });
   };
 
@@ -78,14 +77,14 @@ export default function ProductCreatePage() {
                 as={TextField}
               />
               <ErrorMessage component={TextError} name="description" />
-              <label>Изображение</label>
+              {/* <label>Изображение</label>
               <Field
                 className={classes.input}
                 name="images"
                 variant="outlined"
                 as={TextField}
               />
-              <ErrorMessage component={TextError} name="images" />
+              <ErrorMessage component={TextError} name="images" /> */}
               <Button type="submit" color="primary" variant="contained">
                 Создать
               </Button>
