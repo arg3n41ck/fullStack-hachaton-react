@@ -42,7 +42,7 @@ export default function ProductItem({ data }) {
         <CardMedia
           onClick={() => history.push(`/products/${id}`)}
           className={classes.media}
-          image={images[0]}
+          // image={images[0]}
           title={title}
         />
         <CardContent>

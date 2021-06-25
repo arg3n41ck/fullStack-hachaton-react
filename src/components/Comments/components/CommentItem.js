@@ -6,7 +6,7 @@ import editImg from "../../../assets/icons/pencil.svg"
 import classes from "../../Comments/comments.module.css"
 
 const CommentItem = (props) => {
-    const {message, id} = props.data;
+    const {message, id, changeEditId} = props.data;
 
     const {deleteComment} = useContext(commentContext)
 
@@ -23,7 +23,7 @@ const CommentItem = (props) => {
                 alt="cancel-img"
             />
             <img
-                // onClick={() => changeEditId(id)}
+                onClick={() => changeEditId(id)}
                 className={classes.editIcon}
                 src={editImg}
                 alt="edit-img"

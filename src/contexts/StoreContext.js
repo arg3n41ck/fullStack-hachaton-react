@@ -3,7 +3,7 @@ import React, { useReducer } from "react";
 import { calcSubPrice, calcTotalPrice } from "../helpers/calcPrice";
 
 const INIT_STATE = {
-  products: [],
+  products: {results:[]},
   brands: [],
   brandDetail: null,
   productDetail: null,

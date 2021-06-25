@@ -19,6 +19,7 @@ import Comments from "../../components/Comments";
 export default function MainPage() {
   const { products, fetchProducts, total } = useContext(storeContext);
   const [page, setPage] = useState(1);
+  console.log(products);
 
   useEffect(() => {
     fetchProducts(page - 1);
