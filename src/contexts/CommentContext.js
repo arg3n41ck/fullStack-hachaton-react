@@ -59,7 +59,6 @@ export default function CommentContextProvider(props) {
     });
   };
   const createComment = async ({ product, body }) => {
-    console.log(data);
     const { data } = await axios.post(`${URL}/comment/`, {
       product,
       body,

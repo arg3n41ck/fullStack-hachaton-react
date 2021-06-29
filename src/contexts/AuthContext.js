@@ -57,25 +57,20 @@ export default function AuthContextProvider(props) {
   };
 
   const addInterceptor = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const accessToken = JSON.parse(localStorage.getItem("access_token"));
-    // if (user && accessToken) {
-    //   headers: {
-    //     Authorization: "Bearer " + accessToken;
-    //   }
-    // }
+    axios.interceptors.request.use(
+      (config) => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const token = JSON.parse(localStorage.getItem("access_token"));
+        if (user && token) {
+          config.headers["Authorization"] = "Bearer " + token;
+        }
+        return config;
+      },
+      (error) => {
+        Promise.reject(error);
+      }
+    );
   };
-
-  //   const addInterceptor = async () => {
-  //     const response = await axios.post(`${URL}/accounts/login/`);
-  //     const user = JSON.parse(localStorage.getItem("user"));
-  //     const accessToken = JSON.parse(localStorage.getItem("access_token"));
-  //     if (user && accessToken) {
-  //       headers: {
-  //         Authorization: "Bearer " + accessToken;
-  //       }
-  //     }
-  //   };
 
   return (
     <authContext.Provider
