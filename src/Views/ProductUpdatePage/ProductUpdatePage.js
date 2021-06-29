@@ -8,13 +8,15 @@ import TextError from "../../components/TextError";
 import { storeContext } from "../../contexts/StoreContext";
 import { notifySuccess } from "../../helpers/notifiers";
 import { useHistory, useParams } from "react-router";
+import ImageDropzone from "./ImageDropzone";
+import axios from "axios";
 
 export default function ProductUpdatePage() {
   const [initialValues, setInitialValues] = useState({
     title: "",
     price: "",
     description: "",
-    images: "",
+    images: [],
   });
 
   const { id } = useParams();
@@ -43,7 +45,7 @@ export default function ProductUpdatePage() {
       .typeError("Введите число!")
       .required("Обязательное поле!"),
     description: Yup.string().required("Обязательное поле!"),
-    images: Yup.string().required("Обязательное поле!"),
+    // images: Yup.string().required("Обязательное поле!"),
   });
 
   const onSubmit = (values) => {
@@ -53,6 +55,12 @@ export default function ProductUpdatePage() {
     }).then(() => {
       notifySuccess("Продукт был успешно изменен!");
       history.push(`/products/${id}`);
+    });
+
+    axios.post(URL, values, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
   };
 
@@ -65,7 +73,7 @@ export default function ProductUpdatePage() {
           onSubmit={onSubmit}
           enableReinitialize
         >
-          {({}) => (
+          {({ values, setFieldValue }) => (
             <Form className={classes.form}>
               <Typography variant="h4">Изменение продукта</Typography>
               <label>Название</label>
@@ -99,11 +107,12 @@ export default function ProductUpdatePage() {
               <ErrorMessage component={TextError} name="description" />
 
               <label>Изображение</label>
-              <Field
-                className={classes.input}
+              <ImageDropzone
+                className={classes.ImageDropzone}
+                buttonText={"Загрузить картинку"}
+                setFieldValue={setFieldValue}
                 name="images"
-                variant="outlined"
-                as={TextField}
+                formikImages={values.images}
               />
               <ErrorMessage component={TextError} name="images" />
 

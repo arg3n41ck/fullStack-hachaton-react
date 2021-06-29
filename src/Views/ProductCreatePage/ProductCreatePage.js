@@ -8,6 +8,8 @@ import TextError from "../../components/TextError";
 import { storeContext } from "../../contexts/StoreContext";
 import { notifySuccess } from "../../helpers/notifiers";
 import { useHistory } from "react-router";
+import ImageDropzone from "./ImageDropzone";
+import axios from "axios";
 
 export default function ProductCreatePage() {
   const { createProduct } = useContext(storeContext);
@@ -18,6 +20,7 @@ export default function ProductCreatePage() {
     title: "",
     price: "",
     description: "",
+    images: [],
   };
 
   const validationSchema = Yup.object({
@@ -26,17 +29,23 @@ export default function ProductCreatePage() {
       .typeError("Введите число!")
       .required("Обязательное поле!"),
     description: Yup.string().required("Обязательное поле!"),
-    // images: Yup.string().required("Обязательное поле!"),
+    // images: Yup.object().required("Обязательное поле!"),
   });
 
   const onSubmit = (values, actions) => {
     createProduct({
       ...values,
-      // images: [values.images],
+      images: [values.images],
     }).then((id) => {
-      // actions.resetForm();
+      actions.resetForm();
       notifySuccess("Продукт был создан!");
-      // history.push(`/products/${id}`);
+      history.push(`/products/${id}`);
+    });
+
+    axios.post(URL, values, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
   };
 
@@ -48,7 +57,7 @@ export default function ProductCreatePage() {
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({ values }) => (
+          {({ values, setFieldValue }) => (
             <Form className={classes.form}>
               <Typography variant="h4">Создание продукта</Typography>
               <label>Название</label>
@@ -77,14 +86,16 @@ export default function ProductCreatePage() {
                 as={TextField}
               />
               <ErrorMessage component={TextError} name="description" />
-              {/* <label>Изображение</label>
-              <Field
-                className={classes.input}
+
+              <label>Изображение</label>
+              <ImageDropzone
+                className={classes.ImageDropzone}
+                buttonText={"Загрузить картинку"}
+                setFieldValue={setFieldValue}
                 name="images"
-                variant="outlined"
-                as={TextField}
+                formikImages={values.images}
               />
-              <ErrorMessage component={TextError} name="images" /> */}
+              <ErrorMessage component={TextError} name="images" />
               <Button type="submit" color="primary" variant="contained">
                 Создать
               </Button>

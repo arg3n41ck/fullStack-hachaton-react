@@ -34,9 +34,11 @@ export default function SignUp() {
       ...values,
     });
     console.log(values);
-    // actions.resetForm();
-    notifySuccess("Вы успешно зарегестрировались!");
-    // history.push(`/`);
+    actions.resetForm();
+    notifySuccess(
+      "Вы успешно зарегестрировались, теперь можете войти в аккаунт!"
+    );
+    history.push(`/login`);
   };
 
   return (

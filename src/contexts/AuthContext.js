@@ -1,3 +1,4 @@
+import { KeyboardReturnOutlined } from "@material-ui/icons";
 import axios from "axios";
 import React, { useReducer } from "react";
 
@@ -20,10 +21,20 @@ export default function AuthContextProvider(props) {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
 
   const setLogin = async ({ email, password }) => {
-    await axios.post(`${URL}/accounts/login/`, {
+    (await axios.post)(`${URL}/accounts/login/`, {
       email,
       password,
-    });
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          localStorage.setItem("user", JSON.stringify(res.data));
+          localStorage.setItem("access_token", res.data.access);
+          localStorage.setItem("refresh_token", res.data.refresh);
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   const setRegistration = async ({ email, password, password2 }) => {
@@ -34,6 +45,38 @@ export default function AuthContextProvider(props) {
     });
   };
 
+  const logOut = async () => {
+    // await axios.post(`${URL}/accounts/logout/`);
+    localStorage.removeItem("user");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+  };
+
+  const getCurrentUser = () => {
+    return JSON.parse(localStorage.getItem("user"));
+  };
+
+  const addInterceptor = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const accessToken = JSON.parse(localStorage.getItem("access_token"));
+    // if (user && accessToken) {
+    //   headers: {
+    //     Authorization: "Bearer " + accessToken;
+    //   }
+    // }
+  };
+
+  //   const addInterceptor = async () => {
+  //     const response = await axios.post(`${URL}/accounts/login/`);
+  //     const user = JSON.parse(localStorage.getItem("user"));
+  //     const accessToken = JSON.parse(localStorage.getItem("access_token"));
+  //     if (user && accessToken) {
+  //       headers: {
+  //         Authorization: "Bearer " + accessToken;
+  //       }
+  //     }
+  //   };
+
   return (
     <authContext.Provider
       value={{
@@ -41,6 +84,9 @@ export default function AuthContextProvider(props) {
         registration: state.registration,
         setLogin,
         setRegistration,
+        logOut,
+        getCurrentUser,
+        addInterceptor,
       }}
     >
       {props.children}

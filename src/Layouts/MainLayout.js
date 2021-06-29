@@ -27,6 +27,14 @@ import InstagramIcon from "@material-ui/icons/Instagram";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import StarIcon from "@material-ui/icons/Star";
+import { authContext } from "../contexts/AuthContext";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import axios from "axios";
 
 const drawerWidth = 240;
 
@@ -130,8 +138,48 @@ export default function MainLayout(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
   const { brands, fetchBrands } = useContext(storeContext);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(undefined);
+  const { getCurrentUser, logOut, addInterceptor } = useContext(authContext);
+  const history = useHistory();
+  const [auth, setAuth] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const opene = Boolean(anchorEl);
+  const user = getCurrentUser();
+  // const open = this.state.anchorEl === null ? false : true;
+
+  useEffect(() => {
+    console.log(user);
+
+    if (user) {
+      setCurrentUser(user);
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   const accessToken = JSON.parse(localStorage.getItem("access_token"));
+  //   if (user && accessToken) {
+  //     addInterceptor();
+  //   }
+  // }, []);
+
+  const handleChange = (event) => {
+    setAuth(event.target.checked);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logoutUser = () => {
+    logOut();
+    history.push(`/login`);
+  };
 
   // useEffect(() => {
   //   fetchBrands();
@@ -145,11 +193,7 @@ export default function MainLayout(props) {
     setOpen(false);
   };
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-
-  const history = useHistory();
 
   return (
     <div className={classes.root}>
@@ -197,11 +241,73 @@ export default function MainLayout(props) {
               <StarIcon />
             </IconButton>
           </Link>
-          <Link to="/login">
-            <IconButton>
-              <AccountCircleIcon style={{ color: "white", display: "flex" }} />
-            </IconButton>
-          </Link>
+          {/* <Link to="/login"> */}
+          <IconButton>
+            {currentUser ? (
+              <div>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  color="inherit"
+                  onClick={handleMenu}
+                >
+                  {/* <AccountCircle /> */}
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={opene}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={logoutUser}>LogOut</MenuItem>
+                </Menu>
+              </div>
+            ) : (
+              <div>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  {/* <AccountCircle /> */}
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={opene}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={() => history.push(`/login`)}>
+                    Login
+                  </MenuItem>
+                </Menu>
+              </div>
+            )}
+            <AccountCircleIcon style={{ color: "white", display: "flex" }} />
+          </IconButton>
+          {/* </Link> */}
         </Toolbar>
       </AppBar>
       <Drawer
