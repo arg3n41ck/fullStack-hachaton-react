@@ -1,5 +1,5 @@
 .cancelIcon {
-  position: absolute;
+  /* position: absolute; */
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -8,11 +8,28 @@
 }
 
 .editIcon {
-  position: absolute;
+  /* position: absolute; */
 
   width: 20px;
   height: 20px;
   cursor: pointer;
   right: 10px;
   top: 40px;
+}
+.CommBlock {
+  padding: 5px;
+  border: 2px Solid rgba(241, 232, 232, 0.2);
+  color: #fff;
+  max-height: 80px;
+  height: 35px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+li {
+  margin-top: 20px;
+}
+.UserBlock {
+  padding: 5px;
+  color: rgb(206, 144, 144);
 }

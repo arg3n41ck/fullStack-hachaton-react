@@ -11,6 +11,7 @@ import { useHistory } from "react-router";
 import { storeContext } from "../../contexts/StoreContext";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { IconButton } from "@material-ui/core";
+import StarsIcon from "@material-ui/icons/Stars";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
 const useStyles = makeStyles({
@@ -30,7 +31,8 @@ const useStyles = makeStyles({
 export default function ProductItem({ data }) {
   const classes = useStyles();
 
-  const { title, images, price, description, id } = data;
+  const { title, image, price, description, id, date, likes } = data;
+  console.log(data);
 
   const { addProductToCart, addProductToFavorites } = useContext(storeContext);
 
@@ -42,7 +44,7 @@ export default function ProductItem({ data }) {
         <CardMedia
           onClick={() => history.push(`/products/${id}`)}
           className={classes.media}
-          // image={images[0]}
+          image={image}
           title={title}
         />
         <CardContent>
@@ -64,6 +66,16 @@ export default function ProductItem({ data }) {
               {description}
             </Truncate>
           </Typography>
+          <Typography gutterBottom variant="h5" component="h2">
+            <Truncate lines={1} ellipsis={"..."}>
+              {date}
+            </Truncate>
+          </Typography>
+          <Typography gutterBottom variant="h5" component="h2">
+            <Truncate lines={1} ellipsis={"..."}>
+              {likes}
+            </Truncate>
+          </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions className={classes.button}>
@@ -71,6 +83,9 @@ export default function ProductItem({ data }) {
           <AddShoppingCartIcon />
         </IconButton>
         <IconButton onClick={() => addProductToFavorites(data)} size="large">
+          <StarsIcon />
+        </IconButton>
+        <IconButton>
           <FavoriteBorderIcon />
         </IconButton>
       </CardActions>

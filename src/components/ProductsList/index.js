@@ -1,7 +1,10 @@
 import React  from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ProductItem from "../ProductItem";
-import  {Grid}  from "@material-ui/core";
+import { useContext } from "react";
+import { storeContext } from "../../contexts/StoreContext";
+import { useEffect } from "react";
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -9,9 +12,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function ProductsList( {products} ) {
+export default function ProductsList({ products }) {
+  const { fetchProducts } = useContext(storeContext);
   const classes = useStyles();
 
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div className={classes.root}>

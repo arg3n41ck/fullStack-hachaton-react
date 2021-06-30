@@ -8,14 +8,6 @@ const INIT_STATE = {
 
 const reducer = (state = INIT_STATE, action) => {
   switch (action.type) {
-    case "SET_LOGIN":
-      return {
-        login: action.payload,
-      };
-    case "SET_REGISTRATION":
-      return {
-        registration: action.payload,
-      };
     default:
       return state;
   }
@@ -27,23 +19,18 @@ const { REACT_APP_API_URL: URL } = process.env;
 export default function AuthContextProvider(props) {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
 
-  const setLogin = async () => {
-    const response = await axios.post(`${URL}/accounts/login/`);
-    const loginUser = response.data;
-
-    dispatch({
-      type: "SET_LOGIN",
-      payload: loginUser,
+  const setLogin = async ({ email, password }) => {
+    await axios.post(`${URL}/accounts/login/`, {
+      email,
+      password,
     });
   };
 
-  const setRegistration = async () => {
-    const response = await axios.post(`${URL}/accounts/register/`);
-    const regUser = response.data;
-
-    dispatch({
-      type: "SET_REGISTRATION",
-      payload: regUser,
+  const setRegistration = async ({ email, password, password2 }) => {
+    await axios.post(`${URL}/accounts/register/`, {
+      email,
+      password,
+      password2,
     });
   };
 

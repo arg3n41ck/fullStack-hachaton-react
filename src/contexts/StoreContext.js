@@ -3,7 +3,7 @@ import React, { useReducer } from "react";
 import { calcSubPrice, calcTotalPrice } from "../helpers/calcPrice";
 
 const INIT_STATE = {
-  products: {results:[]},
+  products: { results: [] },
   brands: [],
   brandDetail: null,
   productDetail: null,
@@ -80,7 +80,7 @@ export default function StoreContextProvider(props) {
       );
       const products = response.data;
       const total = response.headers["x-total-count"];
-      console.log(URL);
+      console.log(products);
 
       dispatch({
         type: "SET_PRODUCTS",
@@ -111,15 +111,26 @@ export default function StoreContextProvider(props) {
   const fetchProductDetail = async (id) => {
     const response = await axios.get(`${URL}/products/${id}/`);
     const productDetail = response.data;
+
+    console.log(productDetail);
+
     dispatch({
       type: "SET_PRODUCT_DETAIL",
       payload: productDetail,
     });
   };
 
-  const createProduct = async (product) => {
-    const response = await axios.post(`${URL}/products/create/`, product);
+  const createProduct = async ({ title, price, description }) => {
+    console.log(title);
+    console.log(price);
+    console.log(description);
+    const response = await axios.post(`${URL}/products/`, {
+      title,
+      price,
+      description,
+    });
     const createdProduct = response.data;
+    console.log(createdProduct);
 
     dispatch({
       type: "ADD_PRODUCT",

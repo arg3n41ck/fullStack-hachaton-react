@@ -11,7 +11,7 @@ import TextError from "../../components/TextError";
 import { authContext } from "../../contexts/AuthContext";
 
 export default function SignUp() {
-  const { registration, setRegistration } = useContext(authContext);
+  const { setRegistration } = useContext(authContext);
 
   const history = useHistory();
 
@@ -34,7 +34,7 @@ export default function SignUp() {
       ...values,
     });
     console.log(values);
-    actions.resetForm();
+    // actions.resetForm();
     notifySuccess("Вы успешно зарегестрировались!");
     // history.push(`/`);
   };

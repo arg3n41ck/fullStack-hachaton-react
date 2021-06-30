@@ -37,7 +37,7 @@ export default function Login() {
       ...values,
     });
     console.log(values);
-    actions.resetForm();
+    // actions.resetForm();
     notifySuccess("Вы успешно вошли в аккаунт!");
     // history.push(`/`);
   };
