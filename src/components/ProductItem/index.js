@@ -13,6 +13,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { IconButton } from "@material-ui/core";
 import StarsIcon from "@material-ui/icons/Stars";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import axios from "axios";
 
 const useStyles = makeStyles({
   root: {
@@ -32,11 +33,17 @@ export default function ProductItem({ data }) {
   const classes = useStyles();
 
   const { title, image, price, description, id, date, likes } = data;
-  console.log(data);
+  // console.log(data);
 
-  const { addProductToCart, addProductToFavorites } = useContext(storeContext);
+  const { addProductToCart, addProductToFavorites, URL } =
+    useContext(storeContext);
 
   const history = useHistory();
+
+  const requestLike = async (id) => {
+    const response = await axios.post(`${URL}/products/${id}/like/`);
+    console.log(response);
+  };
 
   return (
     <Card className={classes.root}>
@@ -74,6 +81,9 @@ export default function ProductItem({ data }) {
           <Typography gutterBottom variant="h5" component="h2">
             <Truncate lines={1} ellipsis={"..."}>
               {likes}
+              <IconButton>
+                <FavoriteBorderIcon onClick={() => requestLike(id)} />
+              </IconButton>
             </Truncate>
           </Typography>
         </CardContent>
@@ -84,9 +94,6 @@ export default function ProductItem({ data }) {
         </IconButton>
         <IconButton onClick={() => addProductToFavorites(data)} size="large">
           <StarsIcon />
-        </IconButton>
-        <IconButton>
-          <FavoriteBorderIcon />
         </IconButton>
       </CardActions>
     </Card>

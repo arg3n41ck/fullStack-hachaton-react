@@ -2,13 +2,14 @@ import React, { useContext, useState } from 'react';
 import { commentContext } from '../../../contexts/CommentContext';
 
 const CommentEdit = (props) => {
-    const {comment : textComment, id} = props.data;
+    const { comment: textComment, id } = props.data;
     const [comment, setComment] = useState(textComment);
 
-    const {changeComment} = useContext(commentContext)
+    const { changeComment } = useContext(commentContext)
 
     const handleEdit = (e) => {
         e.preventDefault()
+        console.log(id);
         changeComment(id, comment);
     }
 

@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { ConfirmProvider } from "material-ui-confirm";
 import CommentContextProvider from "./contexts/CommentContext";
 import AuthContextProvider from "./contexts/AuthContext";
+import axios from "axios";
 
 toast.configure();
 

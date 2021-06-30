@@ -25,7 +25,7 @@ const reducer = (state = INIT_STATE, action) => {
           (body) => body.id !== action.payload
         ),
       };
-    case "CHAGE_EDIT_ID":
+    case "CHANGE_EDIT_ID":
       return {
         ...state,
         editCommentId: action.payload,
@@ -50,9 +50,7 @@ export default function CommentContextProvider(props) {
 
   const fetchComments = async () => {
     const respons = await axios.get(`${URL}/comment/`, {
-      // headers: {
-      //   "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI0ODgyNTUyLCJqdGkiOiJhY2JjY2UzMzEwOTk0OWZlOWIwYjdhZWM2YTZhNTJkNSIsInVzZXJfaWQiOjl9.yTZ-GNPWyQJ0h5Ng95LnBiQiIXTs2odeN0tLcad4zpg"
-      // }
+
     });
     console.log(respons, "get запрос");
 
@@ -62,7 +60,9 @@ export default function CommentContextProvider(props) {
       payload: comments,
     });
   };
+
   const createComment = async ({ body }) => {
+    axios.defaults.headers.common['Authorization'] = 'Token ' + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI1MDYzMzEyLCJqdGkiOiJmZDkzZjA0ZDU2YTE0ZjIxOTViODc2ZmZjNmVjOWUyZiIsInVzZXJfaWQiOjEwfQ.mxSJIHocwNOUu-qJGbs3zXIgTXW9YxiQC9bPlzY0YMc";
     const { data } = await axios.post(`${URL}/comment/`, {
       body: body,
     });
@@ -73,6 +73,7 @@ export default function CommentContextProvider(props) {
     });
   };
   const deleteComment = async (id) => {
+
     await axios.delete(`${URL}/comment/${id}/`);
     dispatch({
       type: "DELETE_COMMENT",
@@ -90,7 +91,9 @@ export default function CommentContextProvider(props) {
     dispatch({
       type: "EDIT_COMMENT",
       payload: data,
+
     });
+    changeEditId(null)
   };
 
   return (

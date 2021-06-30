@@ -114,16 +114,13 @@ export default function StoreContextProvider(props) {
 
     console.log(productDetail);
 
-    dispatch({
-      type: "SET_PRODUCT_DETAIL",
-      payload: productDetail,
-    });
+    // dispatch({
+    //   type: "SET_PRODUCT_DETAIL",
+    //   payload: productDetail,
+    // });
   };
 
   const createProduct = async ({ title, price, description }) => {
-    console.log(title);
-    console.log(price);
-    console.log(description);
     const response = await axios.post(`${URL}/products/`, {
       title,
       price,
@@ -149,24 +146,24 @@ export default function StoreContextProvider(props) {
   };
 
   const updateProduct = async (id, data) => {
-    await axios.patch(`${URL}/products/update/${id}/`, data);
+    await axios.patch(`${URL}/products/${id}/`, data);
     dispatch({
       type: "CLEAR_PRODUCT",
     });
   };
 
-  const fetchBrands = async () => {
-    const response = await axios.get(`${URL}/brands`);
-    const brands = response.data;
+  // const fetchBrands = async () => {
+  //   const response = await axios.get(`${URL}/categories/`);
+  //   const brands = response.data;
 
-    dispatch({
-      type: "SET_BRANDS",
-      payload: brands,
-    });
-  };
+  //   dispatch({
+  //     type: "SET_BRANDS",
+  //     payload: brands,
+  //   });
+  // };
 
-  const fetchBrandProducts = async (brandId) => {
-    const response = await axios.get(`${URL}/products/?brand=${brandId}`);
+  const fetchBrandProducts = async (slug) => {
+    const response = await axios.get(`${URL}/products/categories/${slug}/`);
     const products = response.data;
     const total = response.headers["x-total-count"];
 
@@ -189,7 +186,9 @@ export default function StoreContextProvider(props) {
     });
   };
 
-  const getCart = () => {
+  const getCart = async () => {
+    const response = await axios.get(`${URL}/cart/`);
+    console.log(response);
     let cart = JSON.parse(localStorage.getItem("cart"));
     if (!cart) {
       cart = {
@@ -203,8 +202,9 @@ export default function StoreContextProvider(props) {
     });
   };
 
-  const addProductToCart = (product) => {
-    console.log(product);
+  const addProductToCart = async (product) => {
+    const response = await axios.post(`${URL}/cart/`);
+    console.log(response);
     let cart = JSON.parse(localStorage.getItem("cart"));
     if (!cart) {
       cart = {
@@ -249,7 +249,9 @@ export default function StoreContextProvider(props) {
     getCart();
   };
 
-  const getFavorites = () => {
+  const getFavorites = async () => {
+    const response = await axios.get(`${URL}/products/favorites/`);
+    console.log(response);
     let favorites = JSON.parse(localStorage.getItem("favorites"));
     if (!favorites) {
       favorites = {
@@ -262,7 +264,8 @@ export default function StoreContextProvider(props) {
     });
   };
 
-  const addProductToFavorites = (product) => {
+  const addProductToFavorites = async (product, id) => {
+    const response = await axios.post(`${URL}/products/${id}/favorite/`);
     let favorites = JSON.parse(localStorage.getItem("favorites"));
     if (!favorites) {
       favorites = {
@@ -297,13 +300,14 @@ export default function StoreContextProvider(props) {
         brandDetail: state.brandDetail,
         cart: state.cart,
         favorites: state.favorites,
+        URL: URL,
         fetchProducts,
         fetchProductDetail,
         createProduct,
         deleteProduct,
         updateProduct,
         fetchSearchProducts,
-        fetchBrands,
+        // fetchBrands,
         fetchBrandProducts,
         fetchBrandDetail,
         getCart,

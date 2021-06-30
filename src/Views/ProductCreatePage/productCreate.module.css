@@ -50,3 +50,19 @@
     padding: 15px;
   }
 }
+
+.form .formInput {
+  margin-bottom: 20px;
+}
+
+.form label {
+  margin-bottom: 20px;
+}
+
+.fileName {
+  margin-bottom: 10px !;
+}
+
+.fileName:first-child {
+  margin-top: 10px;
+}

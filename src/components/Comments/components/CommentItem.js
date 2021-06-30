@@ -6,19 +6,22 @@ import editImg from "../../../assets/icons/pencil.svg";
 import classes from "../../Comments/comments.module.css";
 
 const CommentItem = (props) => {
-  const { body, product, user} = props.data;
-
-  const { deleteComment } = useContext(commentContext);
+  const { body, user, id } = props.data;
+  const { changeEditId, deleteComment } = useContext(commentContext)
 
   const handleDelete = () => {
-    deleteComment(product);
+    deleteComment(id);
+  };
+
+  const handleEdit = () => {
+    changeEditId(id);
   };
   return (
     <div>
       <li>
-        
-        <div className={classes.CommBlock}> {body} 
-        <div>
+
+        <div className={classes.CommBlock}> {body}
+          <div>
 
             <img
               onClick={handleDelete}
@@ -27,13 +30,13 @@ const CommentItem = (props) => {
               alt="cancel-img"
             />
             <img
-              // onClick={() => changeEditId(id)}
+              onClick={() => handleEdit(id)}
               className={classes.editIcon}
               src={editImg}
               alt="edit-img"
             />
-        </div>
-        
+          </div>
+
         </div>
         <div className={classes.UserBlock}>{user}</div>
       </li>
