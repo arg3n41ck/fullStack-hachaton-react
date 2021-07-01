@@ -13,7 +13,7 @@ import { useState } from "react";
 import { authContext } from "../../contexts/AuthContext";
 
 export default function Login() {
-  const { login, setLogin } = useContext(authContext);
+  const { login, setLogin, activationCode } = useContext(authContext);
 
   const [token, setToken] = useState();
   const history = useHistory();

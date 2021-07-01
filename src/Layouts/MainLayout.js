@@ -28,13 +28,8 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import StarIcon from "@material-ui/icons/Star";
 import { authContext } from "../contexts/AuthContext";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import axios from "axios";
 
 const drawerWidth = 240;
 
@@ -141,7 +136,8 @@ export default function MainLayout(props) {
   const { brands, fetchBrands } = useContext(storeContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
-  const { getCurrentUser, logOut, addInterceptor } = useContext(authContext);
+  const { getCurrentUser, logOut, addInterceptor, getCategory } =
+    useContext(authContext);
   const history = useHistory();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -332,20 +328,14 @@ export default function MainLayout(props) {
         <Typography variant="h5">Фильтрация билетов</Typography>
         <List>
           {brands.map((brand) => (
-            <Link to={`/brand/${brand.id}`} style={{ textDecoration: "none" }}>
+            <Link to={`/categories/:slug`} style={{ textDecoration: "none" }}>
               <ListItem button key={brand.id}>
-                <ListItemText
-                  style={{
-                    color: "black",
-                    outline: "none",
-                  }}
-                  primary={brand.title}
-                />
+                {getCategory()}
                 <ListItemIcon>
                   <img
                     className={classes.brandLogo}
                     src={brand.logo}
-                    alt={`${brand.title} logo`}
+                    // alt={`${brand.title} logo`}
                   />
                 </ListItemIcon>
               </ListItem>

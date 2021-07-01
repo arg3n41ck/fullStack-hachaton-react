@@ -18,6 +18,7 @@ import TicTacToe from "./Views/TicTacToe/components/Game";
 import SnakeGame from "./Views/SimpleSnake/SnakeGame";
 import Login from "./Views/Auth/Login";
 import SignUp from "./Views/Auth/Registration";
+import CategoriesPage from "./Views/CategoriesPage/CategoriesPage";
 
 export default function Routes() {
   return (
@@ -49,6 +50,7 @@ export default function Routes() {
         <Route path="/snakeGame" component={SnakeGame} exact />
         <Route path="/login" component={Login} exact />
         <Route path="/registration" component={SignUp} exact />
+        <Route path="/categories/:slug" component={CategoriesPage} exact />
       </Switch>
     </Router>
   );

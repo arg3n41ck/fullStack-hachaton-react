@@ -78,14 +78,6 @@ export default function ProductItem({ data }) {
               {date}
             </Truncate>
           </Typography>
-          <Typography gutterBottom variant="h5" component="h2">
-            <Truncate lines={1} ellipsis={"..."}>
-              {likes}
-              <IconButton>
-                <FavoriteBorderIcon onClick={() => requestLike(id)} />
-              </IconButton>
-            </Truncate>
-          </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions className={classes.button}>
@@ -94,6 +86,12 @@ export default function ProductItem({ data }) {
         </IconButton>
         <IconButton onClick={() => addProductToFavorites(data)} size="large">
           <StarsIcon />
+        </IconButton>
+        <IconButton>
+          <FavoriteBorderIcon onClick={() => requestLike(id)} />
+          <IconButton gutterBottom variant="h5" component="h2">
+            <Truncate lines={0}>{likes}</Truncate>
+          </IconButton>
         </IconButton>
       </CardActions>
     </Card>

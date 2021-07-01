@@ -80,7 +80,7 @@ export default function StoreContextProvider(props) {
       );
       const products = response.data;
       const total = response.headers["x-total-count"];
-      console.log(products);
+      console.log(total);
 
       dispatch({
         type: "SET_PRODUCTS",
@@ -120,11 +120,12 @@ export default function StoreContextProvider(props) {
     // });
   };
 
-  const createProduct = async ({ title, price, description }) => {
+  const createProduct = async ({ title, price, description, images }) => {
     const response = await axios.post(`${URL}/products/`, {
       title,
       price,
       description,
+      images,
     });
     const createdProduct = response.data;
     console.log(createdProduct);
@@ -290,6 +291,11 @@ export default function StoreContextProvider(props) {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   };
 
+  const getCategory = async () => {
+    const response = await axios.get(`${URL}/products/categories/`);
+    console.log(response);
+  };
+
   return (
     <storeContext.Provider
       value={{
@@ -315,6 +321,7 @@ export default function StoreContextProvider(props) {
         changeProductCount,
         getFavorites,
         addProductToFavorites,
+        getCategory,
       }}
     >
       {props.children}

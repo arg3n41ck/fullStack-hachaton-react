@@ -72,6 +72,14 @@ export default function AuthContextProvider(props) {
     );
   };
 
+  const activationCode = async (activation_code) => {
+    const response = await axios.get(
+      `${URL}accounts/activate/${activation_code}/`
+    );
+
+    console.log(response);
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -82,6 +90,7 @@ export default function AuthContextProvider(props) {
         logOut,
         getCurrentUser,
         addInterceptor,
+        activationCode,
       }}
     >
       {props.children}
