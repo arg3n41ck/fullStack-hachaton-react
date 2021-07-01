@@ -30,6 +30,8 @@ export default function ProductCreatePage() {
       .required("Обязательное поле!"),
     description: Yup.string().required("Обязательное поле!"),
     // images: Yup.object().required("Обязательное поле!"),
+    date: Yup.string().required("Обязательное поле!"),
+
   });
 
   const onSubmit = (values, actions) => {
@@ -96,6 +98,16 @@ export default function ProductCreatePage() {
                 formikImages={values.images}
               />
               <ErrorMessage component={TextError} name="images" />
+              <label>Дата</label>
+              <Field
+                variant="outlined"
+                className={classes.input}
+                rows={1}
+                multiline
+                name="date"
+                as={TextField}
+              />
+              <ErrorMessage component={TextError} name="date" />
               <Button type="submit" color="primary" variant="contained">
                 Создать
               </Button>

@@ -8,6 +8,7 @@ const INIT_STATE = {
 };
 
 const reducer = (state = INIT_STATE, action) => {
+  console.log(state);
   switch (action.type) {
     default:
       return state;

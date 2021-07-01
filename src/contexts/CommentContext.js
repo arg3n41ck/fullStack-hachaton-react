@@ -62,7 +62,7 @@ export default function CommentContextProvider(props) {
   };
 
   const createComment = async ({ body }) => {
-    axios.defaults.headers.common['Authorization'] = 'Token ' + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI1MDYzMzEyLCJqdGkiOiJmZDkzZjA0ZDU2YTE0ZjIxOTViODc2ZmZjNmVjOWUyZiIsInVzZXJfaWQiOjEwfQ.mxSJIHocwNOUu-qJGbs3zXIgTXW9YxiQC9bPlzY0YMc";
+    axios.defaults.headers.common['Authorization'] = 'Token ' + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI1MTMwNDQ1LCJqdGkiOiJmZTFiODA4YzQ0Yzc0ZjZlOGY3YmY1YjVmNGZkYzJiMiIsInVzZXJfaWQiOjEwfQ.nrgrG7kqtvQnBjycu2OG6OMv2y0OvR6685HHlHJf6FA";
     const { data } = await axios.post(`${URL}/comment/`, {
       body: body,
     });

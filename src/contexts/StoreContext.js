@@ -120,11 +120,14 @@ export default function StoreContextProvider(props) {
     // });
   };
 
-  const createProduct = async ({ title, price, description }) => {
+  const createProduct = async ({ title, price, description, date }) => {
+    axios.defaults.headers.common['Authorization'] = 'Token ' + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI1MDkxNjg4LCJqdGkiOiI4MjgyZGE3ODhlNzY0MjQ1YTQzMTdjMWE4ZGE0MjU3ZiIsInVzZXJfaWQiOjEwfQ.oegWzMrMOS6d-YnuasvAvJVdJqohECBjqid4qqCvpAM";
+
     const response = await axios.post(`${URL}/products/`, {
       title,
-      price,
       description,
+      price,
+      date,
     });
     const createdProduct = response.data;
     console.log(createdProduct);

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { commentContext } from "../../../contexts/CommentContext";
-import cancelImg from "../../../assets/icons/cancel.svg";
+import cancelImg from "../../../assets/icons/cancel.png";
 import editImg from "../../../assets/icons/pencil.svg";
 
 import classes from "../../Comments/comments.module.css";
@@ -24,16 +24,16 @@ const CommentItem = (props) => {
           <div>
 
             <img
-              onClick={handleDelete}
-              className={classes.cancelIcon}
-              src={cancelImg}
-              alt="cancel-img"
-            />
-            <img
               onClick={() => handleEdit(id)}
               className={classes.editIcon}
               src={editImg}
               alt="edit-img"
+            />
+            <img
+              onClick={handleDelete}
+              className={classes.cancelIcon}
+              src={cancelImg}
+              alt="cancel-img"
             />
           </div>
 

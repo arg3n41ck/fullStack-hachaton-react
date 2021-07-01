@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { commentContext } from "../../../contexts/CommentContext";
+import classes from "../../Comments/comments.module.css";
 
 const CommentForm = () => {
   const [body, setBody] = useState("");
@@ -18,16 +19,17 @@ const CommentForm = () => {
 
   return (
     <div>
-      <h3>Отзывы</h3>
+      <h3>Оставить отзыв:</h3>
       <form onSubmit={handleCommentSubmit}>
         <input
+          className={classes.InpSend}
           onChange={(e) => setBody(e.target.value)}
           placeholder="Title"
           name="body"
           type="text"
           value={body}
         />
-        <button>Отправить</button>
+        <button className={classes.BtnSend}>Отправить</button>
       </form>
     </div>
   );
